@@ -2,9 +2,7 @@
 
 **Chat with your AI agent to build a Google Sheet tracker + a live web dashboard. No coding needed.**
 
-Works with **Claude Code** and **Codex** (OpenAI).
-
-> 🇨🇳 跟 AI 聊天，就能做出「Google Sheet 表格 + 实时网页 Dashboard」，不用会写程式。支援 Claude Code 和 Codex。
+Works with **Claude Code** and **Codex** (OpenAI). [中文说明在下面 ↓](#中文说明)
 
 ```
 You: Help me create dashboard
@@ -14,10 +12,8 @@ AI:  Done! 📊 Dashboard link / 📄 Google Sheet / 🛠 Apps Script
 You: Put overdue items at the top and use a red colour theme
 AI:  Updated — just refresh the page.
 You: Perfect
-AI:  Saved. Next time just say "Help me update <name> dashboard".
+AI:  Saved. Next time just say "Help me update [name] dashboard".
 ```
-
----
 
 ## What it does
 
@@ -28,48 +24,23 @@ AI:  Saved. Next time just say "Help me update <name> dashboard".
 | 3. Build the dashboard | Creates the Google Sheet, writes the code, tests it with screenshots first, puts it online | Open the link and click "Allow" the first time |
 | 4. Improve & remember | Makes your changes and publishes them; once you're happy, saves a project note | Say what to change; next time, one sentence picks it up again |
 
-The dashboard reads your Google Sheet **live**: fill in the sheet, refresh the page, and it updates. It works on phones too.
+The dashboard reads your Google Sheet **live**: fill in the sheet, refresh the page, and it updates. It works on phones too. Nothing gets built until you approve the table in step 1.
 
-Nothing gets built until you approve the table in step 1.
+## Get started
 
-> 🇨🇳 **它会帮你做什么**
-> 1. **讨论表格**：AI 问你问题、给范例，设计**最少**的栏位（能自动算的不放进表格）→ 你回答、说 OK
-> 2. **准备环境**：AI 检查电脑、安装 Google 的 clasp 工具 → 你打开一个 Google 设定、登入 Google（各一次）
-> 3. **做 Dashboard**：AI 建 Google Sheet、写程式、先自己测试截图、放上网 → 你打开链接，第一次按「允许」
-> 4. **修改 & 记住**：AI 照你的意见改并自动上线；你满意后写一份记录档 → 以后一句话就能接着改
->
-> Dashboard 会实时读你的 Google Sheet，手机也能看。表格没确认前，什么都不会开始做。
+**Step 1 — Have an AI agent and Node.js.** You need [Claude Code](https://claude.com/claude-code) or [Codex](https://developers.openai.com/codex), plus **Node.js** (free): download the **LTS** version from [nodejs.org](https://nodejs.org) and click "Next" through the installer. Not sure whether you have it? That's fine. The AI will check in step 2.
 
----
-
-## Get started (3 steps)
-
-### Step 1 — Have an AI agent and Node.js
-You need one of these:
-- **Claude Code**: https://claude.com/claude-code
-- **Codex**: https://developers.openai.com/codex
-
-And **Node.js** (free): download the **LTS** version from https://nodejs.org and click "Next" through the installer.
-Not sure whether you have it? That's fine. The AI will check in step 2.
-
-> 🇨🇳 **第 1 步**：准备 Claude Code 或 Codex，再到 https://nodejs.org 下载 **LTS** 版 Node.js 安装（不确定有没有装也没关系，第 2 步 AI 会检查）。
-
-### Step 2 — Ask the AI to install it
-Open Claude Code or Codex and **copy-paste** this:
+**Step 2 — Ask the AI to install it.** Open Claude Code or Codex and copy-paste this:
 
 ```
 Please install the sheet-dashboard skill from https://github.com/jenhuey/sheet-dashboard-kit.
 Steps: check that Node.js 20+ is installed (if not, walk me through installing it), download the repo into my Documents folder (git clone, or the ZIP if git is missing), run `node install.mjs` in that folder, then tell me the result.
 ```
 
-> 🇨🇳 **第 2 步**：打开 Claude Code 或 Codex，贴上这段话：
-> ```
-> 请帮我安装 https://github.com/jenhuey/sheet-dashboard-kit 的 sheet-dashboard skill。
-> 步骤：先确认电脑有 Node.js 20 以上（没有就教我安装），把这个 repo 下载到「文件」资料夹（有 git 就 git clone，没有就下载 ZIP 解压），然后在那个资料夹执行 node install.mjs，最后告诉我结果。
-> ```
+**Step 3 — Start.** Restart Claude Code / Codex and say **`Help me create dashboard`**. Then just answer the AI's questions.
 
 <details>
-<summary>Other ways to install / 其他安装方法</summary>
+<summary>Other ways to install</summary>
 
 - **Claude Code plugin**: type these two lines in Claude Code, one at a time:
   ```
@@ -79,57 +50,25 @@ Steps: check that Node.js 20+ is installed (if not, walk me through installing i
 - **Manual install**: on this page click the green **Code** button → **Download ZIP**. Unzip it, open a terminal (Mac: Terminal / Windows: PowerShell), go into the folder and run `node install.mjs`.
 - **Update to the latest version later**: tell your AI *"Update sheet-dashboard-kit to the latest version from GitHub and run node install.mjs again"*. Your old copy is backed up automatically.
 
-It installs to `~/.claude/skills/` (Claude Code) and/or `~/.agents/skills/` (Codex), depending on which you have.
-
-> 🇨🇳 Claude Code 可以用上面两行 `/plugin` 指令安装；也可以按绿色「Code」→「Download ZIP」，解压后在终端机执行 `node install.mjs`。以后要更新，跟 AI 说「帮我更新 sheet-dashboard-kit 到 GitHub 最新版，再执行一次 node install.mjs」，旧版会自动备份。
+The installer puts the skill in `~/.claude/skills/` (Claude Code) and/or `~/.agents/skills/` (Codex), depending on which you have.
 
 </details>
 
-### Step 3 — Start
-**Restart** Claude Code / Codex and say:
-
-```
-Help me create dashboard
-```
-
-Then just answer the AI's questions.
-
-> 🇨🇳 **第 3 步**：重新打开 Claude Code / Codex，说 **Help me create dashboard**（说中文「帮我做一个 dashboard」也可以），然后回答 AI 的问题就好。
-
----
-
 ## FAQ
 
-**Does it cost anything?**
-Google Sheets, Apps Script and clasp are free. You only need your Claude Code or Codex subscription.
-> 🇨🇳 要钱吗？Google Sheet、Apps Script、clasp 都免费，只需要 Claude Code 或 Codex 本身的订阅。
+**Does it cost anything?** Google Sheets, Apps Script and clasp are free. You only need your Claude Code or Codex subscription.
 
-**Where is my data? Is it safe?**
-The sheet and the code live in **your own Google account**. The AI only writes and uploads the code for you. By default, only you can open the dashboard. The AI asks before making it visible to anyone else.
-> 🇨🇳 资料在哪？表格和程式都在**你自己的 Google 账号**里。Dashboard 默认只有你能看，要给别人看时 AI 会先问你。
+**Where is my data? Is it safe?** The sheet and the code live in **your own Google account**. The AI only writes and uploads the code for you. By default, only you can open the dashboard. The AI asks before making it visible to anyone else.
 
-**"Google hasn't verified this app" appears the first time I open the dashboard.**
-That's normal. It's your own code. Click **Advanced** → **Go to … (unsafe)** → **Allow**. You'll only be asked once.
-> 🇨🇳 第一次打开出现「Google 尚未验证这个应用程式」？正常。按「进阶」→「前往…」→「允许」，只会问一次。
+**"Google hasn't verified this app" appears the first time I open the dashboard.** That's normal: it's your own code. Click **Advanced** → **Go to … (unsafe)** → **Allow**. You'll only be asked once.
 
-**Using Codex, the install or upload fails with a network error.**
-Codex's default sandbox may block network access. Approve the command when asked, or switch to a mode that allows network access (type `/approvals` in Codex).
-> 🇨🇳 用 Codex 时说没有网络？Codex 默认安全模式可能挡住网络。出现询问时选允许，或在 Codex 输入 `/approvals` 换成可以连网的模式。
+**Using Codex, the install or upload fails with a network error.** Codex's default sandbox may block network access. Approve the command when asked, or type `/approvals` in Codex and pick a mode that allows network access.
 
-**How do I change my dashboard later?**
-Say **"Help me update <name> dashboard"**, then tell it what to change. The link stays the same.
-Each dashboard's files are in `Documents/Sheet-Dashboards/<name>/`.
-> 🇨🇳 以后怎么改？说「**帮我更新 <名字> dashboard**」再说要改什么，网址不会变。资料在「文件 / Sheet-Dashboards / <名字>」。
+**How do I change my dashboard later?** Say **`Help me update [name] dashboard`** (replace `[name]` with your dashboard's name), then tell it what to change. The link stays the same. Each dashboard's files are in `Documents/Sheet-Dashboards/[name]/`.
 
-**Can I use a Google Sheet I already have?**
-Yes. When the AI asks where the table should live, choose "I already have a Google Sheet" and paste its link.
-> 🇨🇳 可以用已经有的 Google Sheet 吗？可以，AI 问表格放哪时选「我已经有一个 Google Sheet」，贴上网址就好。
+**Can I use a Google Sheet I already have?** Yes. When the AI asks where the table should live, choose "I already have a Google Sheet" and paste its link.
 
-**Does it work on Windows?**
-Yes. All the tools are cross-platform (Node.js).
-> 🇨🇳 Windows 可以用吗？可以，所有工具都是跨平台的。
-
----
+**Does it work on Windows?** Yes. All the tools are cross-platform (Node.js).
 
 ## What's inside
 
@@ -146,7 +85,51 @@ sheet-dashboard-kit/
    └─ scripts/          ← tools to check, create, publish and test
 ```
 
-> 🇨🇳 `SKILL.md` 是 AI 的作业手册（4 个阶段）；`references/` 是表格设计题库、设计原则、常见问题；`templates/` 是 Dashboard 起手模板；`scripts/` 是检查环境、建立、上线、测试的小工具。
+---
+
+## 中文说明
+
+**跟 AI 聊天，就能做出「Google Sheet 表格 + 实时网页 Dashboard」，不用会写程式。** 支援 Claude Code 和 Codex。
+
+### 它会帮你做什么
+
+1. **讨论表格**：AI 会问你问题、给你范例，设计出**最少**的栏位。能自动算的东西（天数、逾期、完成率）不放进表格，交给 Dashboard 算。你只要回答问题、说 OK。表格没确认前，什么都不会开始做。
+2. **准备环境**：AI 检查你的电脑，并安装 Google 的 clasp 工具。你只需要打开一个 Google 设定、登入 Google，各做一次。
+3. **做 Dashboard**：AI 建好 Google Sheet、写程式，自己先测试并截图检查，再放上网。完成后给你 Dashboard、Google Sheet、Apps Script 三个链接，你第一次打开时按「允许」就好。
+4. **修改 & 记住**：你说哪里要改，AI 改好后自动上线，网址不变。你满意后，AI 会写一份记录档，以后一句话就能接着改。
+
+Dashboard 会实时读你的 Google Sheet：表格填好资料，网页刷新就会更新，手机也能看。
+
+### 开始使用
+
+**第 1 步：准备 AI 工具和 Node.js。** 你需要 [Claude Code](https://claude.com/claude-code) 或 [Codex](https://developers.openai.com/codex)，还有免费的 **Node.js**：到 [nodejs.org](https://nodejs.org) 下载 **LTS** 版，一路按「下一步」安装。不确定有没有装也没关系，第 2 步 AI 会帮你检查。
+
+**第 2 步：请 AI 帮你安装。** 打开 Claude Code 或 Codex，复制贴上这段话：
+
+```
+请帮我安装 https://github.com/jenhuey/sheet-dashboard-kit 的 sheet-dashboard skill。
+步骤：先确认电脑有 Node.js 20 以上（没有就教我安装），把这个 repo 下载到「文件」资料夹（有 git 就 git clone，没有就下载 ZIP 解压），然后在那个资料夹执行 node install.mjs，最后告诉我结果。
+```
+
+**第 3 步：开始做。** 重新打开 Claude Code / Codex，说 **`Help me create dashboard`**（说中文「帮我做一个 dashboard」也可以），然后回答 AI 的问题就好。
+
+其他安装方法：Claude Code 可以用上方「Other ways to install」里的两行 `/plugin` 指令安装；也可以按这个页面绿色的「Code」→「Download ZIP」，解压后在终端机执行 `node install.mjs`。以后要更新，跟 AI 说「帮我更新 sheet-dashboard-kit 到 GitHub 最新版，再执行一次 node install.mjs」，旧版会自动备份。
+
+### 常见问题
+
+**要钱吗？** Google Sheet、Apps Script、clasp 都免费，只需要 Claude Code 或 Codex 本身的订阅。
+
+**资料放在哪里？安全吗？** 表格和程式都在**你自己的 Google 账号**里，AI 只是帮你写程式、放上去。Dashboard 默认只有你自己能看，要给别人看时 AI 会先问你。
+
+**第一次打开出现「Google 尚未验证这个应用程式」？** 正常，这是你自己的程式。按「进阶」→「前往…（不安全）」→「允许」，只会问一次。
+
+**用 Codex 时安装或上传失败、说没有网络？** Codex 默认的安全模式可能挡住网络。出现询问时选择允许，或在 Codex 输入 `/approvals`，换成可以连网的模式。
+
+**以后怎么修改？** 说「**帮我更新 [名字] dashboard**」（或英文 `Help me update [name] dashboard`），再说要改什么，网址不会变。每个 dashboard 的资料都在「文件 / Sheet-Dashboards / [名字]」资料夹里。
+
+**可以用已经有的 Google Sheet 吗？** 可以。AI 问表格要放哪时，选「我已经有一个 Google Sheet」，贴上网址就好。
+
+**Windows 可以用吗？** 可以，所有工具都是跨平台的（Node.js）。
 
 ---
 

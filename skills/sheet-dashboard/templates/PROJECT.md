@@ -1,36 +1,37 @@
-# {{名字}} Dashboard
+# {{name}} Dashboard
 
-> 修改提示词：**「帮我更新 {{名字}} dashboard」**
-> AI 读到这个档案后：改 `apps-script/` → 测试 → `node <skill>/scripts/clasp_deploy.mjs <这个资料夹> "<改了什么>"` → 请使用者刷新网页 → 在下方「修改记录」加一行。
+> Prompt to change it: **"Help me update {{name}} dashboard"**
+> For the AI: edit `apps-script/` → test → `node <skill>/scripts/clasp_deploy.mjs <this folder> "<what changed>"` → ask the user to refresh → add a line to the change log below.
+> Write this file in the user's language.
 
-## 链接
-- 📊 Dashboard：{{dashboard 网址}}
-- 📄 Google Sheet：{{sheet 网址}}
-- 🛠 Apps Script：{{editor 网址}}
-- 存取权：{{MYSELF / ANYONE / ANYONE_ANONYMOUS}}（谁可以看）
-- Google 账号：{{哪个账号建立的；第二个账号要写 CLASP_USER 名字}}
-- 详细 ID 在同资料夹的 `project.json`
+## Links
+- 📊 Dashboard: {{dashboard link}}
+- 📄 Google Sheet: {{sheet link}}
+- 🛠 Apps Script: {{editor link}}
+- Access: {{MYSELF / ANYONE / ANYONE_ANONYMOUS}} (who can open it)
+- Google account: {{which account owns it; for a second account, its CLASP_USER name}}
+- All IDs are in `project.json` in this folder
 
-## 这个表格追踪什么
-{{一两句话：用途、谁在填、多久填一次}}
+## What this sheet tracks
+{{one or two sentences: purpose, who fills it in, how often}}
 
-## 栏位（分页「{{分页名称}}」）
-| 栏位 | 类型 | 选项 / 说明 |
+## Columns (tab "{{tab name}}")
+| Column | Type | Options / notes |
 |--|--|--|
-| {{项目}} | 文字 | |
+| {{Task}} | text | |
 
-Dashboard 角色：名称 = {{}}、分组 = {{}}、日期 = {{}}、状态 = {{}}、完成 = {{}}
+Dashboard roles: name = {{}}, group = {{}}, date = {{}}, status = {{}}, done = {{}}
 
-## Dashboard 显示什么
-- {{例：逾期 / 7 天内到期 / 完成率 卡片，点开有清单}}
-- {{例：各门市明细格子}}
+## What the dashboard shows
+- {{e.g. overdue / due in 7 days / % done cards, each opening a list}}
+- {{e.g. per-shop tiles}}
 
-## 使用者偏好（改版时要遵守）
-- 配色：{{palette 或色码}}
-- 不要的东西：{{例：不要分母、不要另外的进度分页}}
-- {{其他}}
+## User preferences (follow these in every change)
+- Colours: {{palette or hex codes}}
+- Things they don't want: {{e.g. no "/ total" on warning cards, no separate progress tab}}
+- {{other}}
 
-## 修改记录
-| 日期 | 改了什么 |
+## Change log
+| Date | What changed |
 |--|--|
-| {{yyyy-mm-dd}} | 第一版上线 |
+| {{yyyy-mm-dd}} | First version online |

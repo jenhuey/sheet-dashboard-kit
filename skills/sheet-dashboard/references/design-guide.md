@@ -1,38 +1,38 @@
-# Dashboard 设计原则
+# Dashboard design rules
 
-这些原则来自实际做过、使用者觉得好用的几个 dashboard。
+These come from real dashboards that users found genuinely useful.
 
-## 版面顺序（模板已经照这个顺序）
-1. **标题列**：名称、更新时间、「打开表格」、「更新」按钮
-2. **分组切换按钮**：全部 / 每个分类（选了会记住）
-3. **大数字卡**：可以点开，下面展开清单
-   - 有分母的（完成、未完成）：`n / 总数 · %` + 进度条
-   - 警示类（逾期、快到期）：**只放数字 + 一句白话说明**，不要放「/ 总数」，使用者看不懂分母的意义
-4. **深色重点卡**：下一个截止、逾期最久、最新一笔（依使用者「最想一眼看到」替换）
-5. **状态分布**横条
-6. **待处理清单**：依日期排，日期旁边标「逾期 2 天 / 今天 / 3 天后」
-7. **各组明细**：深色横条 + 统计 + 彩色小格子（绿=完成、红=逾期、橘=快到期、灰=进行中），点格子看完整资料
+## Layout order (the template already follows it)
+1. **Title bar**: name, last updated, "Open sheet", "Refresh"
+2. **Group buttons**: All / each category (the choice is remembered)
+3. **Big number cards** — clickable, opening a list underneath
+   - Cards with a meaningful total (done, not done): `n / total · %` + progress bar
+   - Warning cards (overdue, due soon): **just the number + one plain sentence**. No "/ total" — users don't understand what the denominator means there.
+4. **Dark highlight card**: next deadline, most overdue, latest entry (swap for whatever the user "most wants to see")
+5. **Status split** bar
+6. **To-do list** sorted by date, with "2 days overdue / today / in 3 days" next to the date
+7. **Per-group detail**: dark header bar + counts + coloured tiles (green = done, red = overdue, amber = due soon, grey = in progress); click a tile to see the full row
 
-## 数字要有「so what」
-- 好：逾期 3 件、本月完成 12 件、完成率 70%、成交 RM 8,500
-- 不好：「经手项目数」「处理步骤数」「服务了几个分类」这种看了没感觉的数字
-- 问自己：使用者看到这个数字，会知道要做什么吗？不会就拿掉。
+## Numbers need a "so what"
+- Good: 3 overdue, 12 done this month, 70% complete, RM 8,500 won
+- Bad: "items handled", "steps processed", "categories served" — numbers that don't make anyone feel or do anything
+- Ask yourself: when the user sees this number, do they know what to do? If not, drop it.
 
-## 视觉
-- 配色用 4 个 CSS 变数：`--c1` 浅底、`--c2` 主色、`--c3` 强调、`--c4` 深色。预设 ocean / berry / forest，或用使用者的品牌色。
-- 状态色固定意义：绿=完成、红=逾期 / 有问题、橘=快到了 / 注意、灰=一般。
-- 数字用 Bebas Neue（窄、大、好读），内文用 Inter + Noto Sans SC。
-- 英文标签首字母大写。
-- 长网址一律变成短的「🔗 Google Sheet / Drive / Instagram」链接（模板的 `linkify()`），不能撑破表格。
-- 手机宽度（< 860px）要能看：卡片自动换行、表格隐藏次要栏位（`.hide-sm`）。
+## Visual
+- Colours are 4 CSS variables: `--c1` light background, `--c2` main, `--c3` accent, `--c4` dark. Presets: ocean / berry / forest, or the user's brand colours.
+- Status colours always mean the same thing: green = done, red = overdue / problem, amber = soon / watch, grey = normal.
+- Numbers in Bebas Neue (narrow, big, easy to read); body text in Inter + Noto Sans SC.
+- Capitalise the first letter of English labels.
+- Long URLs always become short "🔗 Google Sheet / Drive / Instagram" links (the template's `linkify()`), never stretching a table.
+- Must work at phone width (< 860px): cards wrap, tables hide secondary columns (`.hide-sm`).
 
-## 互动
-- 资讯不要在两个地方重复出现（例如另外做一个「项目进度」分页，内容跟清单一样 → 不要）。
-- 很长的卡片默认收起，点开才展开，用 localStorage 记住（要包 try/catch）。
-- 要给别人看的内容（例如老板）可以加「📋 复制」按钮，复制成纯文字，方便贴 WhatsApp。
-- 每 5 分钟自动重新读资料；「更新」按钮可以马上读。
-- 多语言：网页文字集中在 `TEXT` 物件；要中英切换可以用网址参数 `?lang=en`（doGet 的 `e.parameter.lang` 传进 template）。
+## Interaction
+- Never show the same information in two places (e.g. a separate "project progress" tab that repeats the list → don't).
+- Very long cards start collapsed and open on click; remember the state in localStorage (wrapped in try/catch).
+- Things meant for someone else (e.g. the boss) can get a "📋 Copy" button that copies plain text, ready to paste into WhatsApp.
+- Re-read the data every 5 minutes; the Refresh button reads it immediately.
+- Several languages: all on-screen words live in the `TEXT` object; for a language switch use a URL parameter like `?lang=en` (pass `e.parameter.lang` from `doGet` into the template).
 
-## 私人资料
-- 要隐藏的分页 / 栏位，在 `getDashboardData`（伺服器端）就不要送出去，不要送到网页再用 CSS 藏起来。
-- 需要密码的页面：密码在伺服器端比对后才回传资料。
+## Private data
+- Tabs / columns that must stay hidden are never sent from `getDashboardData` (server side). Don't send them to the page and hide them with CSS.
+- Password-protected pages: compare the password on the server, and only then return the data.
