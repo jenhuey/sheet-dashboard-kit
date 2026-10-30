@@ -1,0 +1,11 @@
+{
+  "name": "sheet-dashboard",
+  "displayName": "Sheet Dashboard Kit",
+  "version": "1.0.0",
+  "description": "Chat your way to a Google Sheet tracker + live web dashboard (Apps Script + clasp). Designs the simplest table with you first, then builds, tests, deploys and remembers the project.",
+  "author": { "name": "jenhuey", "url": "https://github.com/jenhuey" },
+  "homepage": "https://github.com/jenhuey/sheet-dashboard-kit",
+  "repository": "https://github.com/jenhuey/sheet-dashboard-kit",
+  "license": "MIT",
+  "keywords": ["google-sheets", "apps-script", "dashboard", "clasp", "no-code"]
+}

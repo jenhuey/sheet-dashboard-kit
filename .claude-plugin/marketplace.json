@@ -1,0 +1,13 @@
+{
+  "name": "sheet-dashboard-kit",
+  "description": "Sheet Dashboard Kit — Google Sheet + live web dashboard, built by chatting.",
+  "owner": { "name": "jenhuey", "url": "https://github.com/jenhuey" },
+  "plugins": [
+    {
+      "name": "sheet-dashboard",
+      "source": "./",
+      "description": "Design a simple Google Sheet with the user, then build, test, deploy and remember a live Apps Script dashboard.",
+      "version": "1.0.0"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* 配色：c1 浅底色 / c2 主色 / c3 强调色 / c4 深色。custom 就直接改这四个值 */
+  :root, [data-palette="ocean"] { --c1:#C3E7F1; --c2:#519CAB; --c3:#FFC64F; --c4:#20373B; }
+  [data-palette="berry"]  { --c1:#F8E1E7; --c2:#C2185B; --c3:#FFB300; --c4:#2B1A22; }
+  [data-palette="forest"] { --c1:#E3EFE0; --c2:#4C7A4C; --c3:#E8A33D; --c4:#1F2E22; }
+  :root { --bg:#F6F7F7; --card:#FFFFFF; --ink:#1D2324; --mute:#6B7678; --line:#E3E7E8;
+          --done:#2E9E5B; --late:#D64545; --soon:#E8A33D; --open:#C9D2D4; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 Inter, "Noto Sans SC", sans-serif; }
+  .wrap { max-width:1180px; margin:0 auto; padding:20px 16px 48px; }
+  header { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-bottom:14px; }
+  h1 { font:400 34px/1 "Bebas Neue", "Noto Sans SC", sans-serif; letter-spacing:.5px; margin:0; color:var(--c4); }
+  .meta { color:var(--mute); font-size:12px; }
+  .spacer { flex:1; }
+  .btn { border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; padding:6px 14px; font:600 13px Inter, sans-serif; cursor:pointer; text-decoration:none; }
+  .btn.on { background:var(--c4); color:#fff; border-color:var(--c4); }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 16px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:12px; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; cursor:pointer; text-align:left; font:inherit; color:inherit; }
+  .kpi:hover, .kpi.open { border-color:var(--c2); box-shadow:0 0 0 2px var(--c1); }
+  .kpi .label { font-weight:600; color:var(--mute); font-size:12px; text-transform:uppercase; letter-spacing:.4px; }
+  .kpi .num { font:400 44px/1 "Bebas Neue", sans-serif; margin-top:6px; }
+  .kpi .num small { font-size:20px; color:var(--mute); }
+  .kpi .hint { color:var(--mute); font-size:12px; }
+  .bar { height:6px; background:var(--line); border-radius:3px; margin-top:8px; overflow:hidden; }
+  .bar i { display:block; height:100%; background:var(--c2); }
+  .kpi.warn .num { color:var(--late); } .kpi.soon .num { color:var(--soon); } .kpi.good .num { color:var(--done); }
+  .drop { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-top:12px; padding:6px 14px; }
+  .hero { background:var(--c4); color:#fff; border-radius:16px; padding:18px 20px; margin:16px 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; }
+  .hero .label { color:var(--c1); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.4px; }
+  .hero .big { font:400 30px/1.1 "Bebas Neue", "Noto Sans SC", sans-serif; color:var(--c3); margin-top:4px; }
+  .hero .sub { font-size:13px; opacity:.85; }
+  h2 { font:700 16px Inter, "Noto Sans SC", sans-serif; margin:26px 0 10px; color:var(--c4); }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; border:1px solid var(--line); }
+  th, td { text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { background:var(--c1); color:var(--c4); font-size:12px; text-transform:uppercase; letter-spacing:.3px; }
+  td { overflow-wrap:anywhere; }
+  tr:last-child td { border-bottom:0; }
+  .tag { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; font-weight:600; background:var(--c1); color:var(--c4); white-space:nowrap; }
+  .tag.late { background:#FBE3E3; color:var(--late); } .tag.soon { background:#FDF0DA; color:#9A6412; } .tag.done { background:#DDF3E5; color:var(--done); }
+  .stack { display:flex; height:28px; border-radius:8px; overflow:hidden; background:var(--line); }
+  .stack span { display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:600; min-width:0; white-space:nowrap; overflow:hidden; }
+  .legend { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; font-size:12px; color:var(--mute); }
+  .legend b { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px; }
+  .group { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-bottom:12px; overflow:hidden; }
+  .group .gh { background:var(--c4); color:#fff; padding:10px 14px; display:flex; flex-wrap:wrap; gap:4px 14px; align-items:baseline; }
+  .group .gh b { font:400 22px "Bebas Neue", "Noto Sans SC", sans-serif; letter-spacing:.4px; }
+  .group .gh span { font-size:12px; opacity:.85; }
+  .cells { display:flex; flex-wrap:wrap; gap:6px; padding:12px 14px; }
+  .cell { border:0; border-radius:8px; padding:6px 10px; font:600 12px Inter, "Noto Sans SC", sans-serif; cursor:pointer; color:#fff; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .cell.open { background:var(--open); color:var(--ink); } .cell.done { background:var(--done); } .cell.late { background:var(--late); } .cell.soon { background:var(--soon); }
+  .detail { margin:0 14px 12px; padding:10px 12px; background:var(--bg); border-radius:10px; font-size:13px; }
+  .detail div { margin:2px 0; } .detail em { color:var(--mute); font-style:normal; margin-right:6px; }
+  .empty { color:var(--mute); padding:18px; text-align:center; }
+  a { color:var(--c2); }
+  #err { display:none; background:#FBE3E3; color:var(--late); padding:12px; border-radius:10px; margin-bottom:12px; }
+  @media (max-width:860px) {
+    h1 { font-size:28px; } .kpi .num { font-size:36px; }
+    .hide-sm { display:none; }
+  }
+</style>
+</head>
+<body data-palette="ocean">
+<div class="wrap">
+  <header>
+    <h1><?= title ?></h1>
+    <span class="meta" id="updated">载入中…</span>
+    <span class="spacer"></span>
+    <a class="btn" id="sheetLink" href="#" target="_blank">📄 打开表格</a>
+    <button class="btn" onclick="load()">🔄 更新</button>
+  </header>
+  <div id="err"></div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="kpis"></div>
+  <div id="drop"></div>
+  <div class="hero" id="hero"></div>
+  <div id="statusBox"></div>
+  <h2 id="todoTitle">待处理</h2>
+  <div id="todo"></div>
+  <div id="groupsBox"></div>
+</div>
+<script>
+// 画面上的文字都在这里，要换语言改这里就好
+const TEXT = {
+  updated: '更新于', all: '全部', total: '全部项目', done: '已完成', open: '未完成',
+  late: '已逾期', soon: '天内到期', lateHint: '截止日已过、还没完成', soonHint: '快到截止日了',
+  next: '下一个截止', oldestLate: '逾期最久', latest: '最新一笔', none: '没有',
+  statusTitle: '状态分布', todo: '待处理', groups: '各组明细', noItems: '目前没有资料',
+  daysLeft: (n) => n === 0 ? '今天' : n > 0 ? n + ' 天后' : '逾期 ' + (-n) + ' 天',
+  allDone: '全部完成 🎉', row: '第 {n} 列',
+};
+const STATUS_COLORS = ['#519CAB', '#E8A33D', '#2E9E5B', '#8E7CC3', '#D64545', '#20373B', '#6FA8DC', '#C27BA0'];
+let D = null, group = '', openKpi = '', openCell = '';
+try { group = localStorage.getItem('sd-group:' + document.title) || ''; } catch (e) {}
+
+function load() {
+  google.script.run.withSuccessHandler(render).withFailureHandler((e) => {
+    const el = document.getElementById('err'); el.style.display = 'block'; el.textContent = '读取失败：' + (e.message || e);
+  }).getDashboardData();
+}
+setInterval(load, 5 * 60 * 1000);
+
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// 长网址变成短链接，不撑破表格
+function linkify(s) {
+  return esc(s).replace(/https?:\/\/[^\s<]+/g, (u) => {
+    const h = u.replace(/^https?:\/\//, '');
+    const name = /docs\.google\.com\/spreadsheets/.test(h) ? 'Google Sheet' : /docs\.google\.com\/document/.test(h) ? 'Google Doc'
+      : /drive\.google\.com/.test(h) ? 'Drive' : /instagram\.com/.test(h) ? 'Instagram' : /canva\.com/.test(h) ? 'Canva' : h.split('/')[0].replace(/^www\./, '');
+    return '<a href="' + u + '" target="_blank" onclick="event.stopPropagation()">🔗 ' + name + '</a>';
+  });
+}
+function daysBetween(a, b) { return Math.round((Date.parse(b) - Date.parse(a)) / 864e5); }
+function fmtDate(iso) { if (!iso) return ''; const [y, m, d] = iso.split('-'); return d + '/' + m + '/' + y; }
+
+function stateOf(r) {
+  const R = D.roles;
+  const done = (R.doneCheckbox && r[R.doneCheckbox] === true) || (R.status && (R.doneStatus || []).includes(r[R.status]));
+  if (done) return 'done';
+  if (R.date && r[R.date]) {
+    const n = daysBetween(D.today, r[R.date]);
+    if (n < 0) return 'late';
+    if (n <= D.dueSoonDays) return 'soon';
+  }
+  return 'open';
+}
+const titleOf = (r) => r[D.roles.title] || TEXT.row.replace('{n}', r._row);
+
+function render(data) {
+  D = data;
+  document.getElementById('err').style.display = 'none';
+  document.body.dataset.palette = D.palette || 'ocean';
+  document.getElementById('updated').textContent = TEXT.updated + ' ' + D.updatedAt;
+  document.getElementById('sheetLink').href = D.sheetUrl;
+  D.rows.forEach((r) => { r._state = stateOf(r); });
+  draw();
+}
+
+function groupsList() {
+  const g = D.roles.group; if (!g) return [];
+  const col = D.columns.find((c) => c.key === g);
+  const seen = [...new Set(D.rows.map((r) => r[g]).filter(Boolean))];
+  const opts = (col && col.options) || [];
+  return opts.filter((o) => seen.includes(o)).concat(seen.filter((s) => !opts.includes(s)));
+}
+
+function draw() {
+  const groups = groupsList();
+  if (group && !groups.includes(group)) group = '';
+  const chips = document.getElementById('chips');
+  chips.innerHTML = groups.length ? ['', ...groups].map((g) =>
+    '<button class="btn' + (g === group ? ' on' : '') + '" data-g="' + esc(g) + '">' + esc(g || TEXT.all) + '</button>').join('') : '';
+  chips.querySelectorAll('button').forEach((b) => b.onclick = () => {
+    group = b.dataset.g; openKpi = ''; try { localStorage.setItem('sd-group:' + document.title, group); } catch (e) {} draw();
+  });
+  const rows = group ? D.rows.filter((r) => r[D.roles.group] === group) : D.rows;
+  drawKpis(rows); drawHero(rows); drawStatus(rows); drawTodo(rows); drawGroups(group ? [group] : groups, rows);
+}
+
+function drawKpis(rows) {
+  const total = rows.length, by = (s) => rows.filter((r) => r._state === s);
+  const done = by('done'), open = rows.filter((r) => r._state !== 'done'), late = by('late'), soon = by('soon');
+  const pct = (n) => total ? Math.round(n / total * 100) : 0;
+  const cards = [
+    { id: 'total', label: TEXT.total, list: rows, num: total },
+    { id: 'done', label: TEXT.done, list: done, num: done.length, of: true, cls: 'good' },
+    { id: 'open', label: TEXT.open, list: open, num: open.length, of: true },
+  ];
+  if (D.roles.date) {
+    cards.push({ id: 'late', label: TEXT.late, list: late, num: late.length, hint: TEXT.lateHint, cls: late.length ? 'warn' : '' });
+    cards.push({ id: 'soon', label: D.dueSoonDays + ' ' + TEXT.soon, list: soon, num: soon.length, hint: TEXT.soonHint, cls: soon.length ? 'soon' : '' });
+  }
+  const box = document.getElementById('kpis');
+  box.innerHTML = cards.map((c) => '<button class="kpi ' + (c.cls || '') + (openKpi === c.id ? ' open' : '') + '" data-id="' + c.id + '">' +
+    '<div class="label">' + esc(c.label) + '</div>' +
+    '<div class="num">' + c.num + (c.of ? ' <small>/ ' + total + ' · ' + pct(c.num) + '%</small>' : '') + '</div>' +
+    (c.of ? '<div class="bar"><i style="width:' + pct(c.num) + '%"></i></div>' : c.hint ? '<div class="hint">' + esc(c.hint) + '</div>' : '') +
+    '</button>').join('');
+  box.querySelectorAll('.kpi').forEach((b) => b.onclick = () => { openKpi = openKpi === b.dataset.id ? '' : b.dataset.id; draw(); });
+  const c = cards.find((x) => x.id === openKpi);
+  document.getElementById('drop').innerHTML = c ? '<div class="drop">' + listTable(c.list) + '</div>' : '';
+}
+
+function drawHero(rows) {
+  const R = D.roles, items = [];
+  if (R.date) {
+    const upcoming = rows.filter((r) => r._state !== 'done' && r[R.date] && r[R.date] >= D.today).sort((a, b) => a[R.date] < b[R.date] ? -1 : 1)[0];
+    const late = rows.filter((r) => r._state === 'late').sort((a, b) => a[R.date] < b[R.date] ? -1 : 1)[0];
+    items.push([TEXT.next, upcoming ? titleOf(upcoming) : TEXT.none, upcoming ? fmtDate(upcoming[R.date]) + ' · ' + TEXT.daysLeft(daysBetween(D.today, upcoming[R.date])) : '']);
+    items.push([TEXT.oldestLate, late ? titleOf(late) : TEXT.none, late ? TEXT.daysLeft(daysBetween(D.today, late[R.date])) : '']);
+  }
+  const last = rows[rows.length - 1];
+  items.push([TEXT.latest, last ? titleOf(last) : TEXT.none, last && R.group ? last[R.group] || '' : '']);
+  document.getElementById('hero').innerHTML = items.map((i) =>
+    '<div><div class="label">' + esc(i[0]) + '</div><div class="big">' + esc(i[1]) + '</div><div class="sub">' + esc(i[2]) + '</div></div>').join('');
+}
+
+function drawStatus(rows) {
+  const box = document.getElementById('statusBox'), s = D.roles.status;
+  const col = s && D.columns.find((c) => c.key === s);
+  if (!col || !rows.length) { box.innerHTML = ''; return; }
+  const vals = [...new Set([...(col.options || []), ...rows.map((r) => r[s] || '—')])];
+  const counts = vals.map((v, i) => ({ v, n: rows.filter((r) => (r[s] || '—') === v).length, c: STATUS_COLORS[i % STATUS_COLORS.length] })).filter((x) => x.n);
+  box.innerHTML = '<h2>' + TEXT.statusTitle + '</h2><div class="stack">' +
+    counts.map((x) => '<span style="flex:' + x.n + ';background:' + x.c + '">' + (x.n / rows.length >= .08 ? x.n : '') + '</span>').join('') +
+    '</div><div class="legend">' + counts.map((x) => '<span><b style="background:' + x.c + '"></b>' + esc(x.v) + ' ' + x.n + '</span>').join('') + '</div>';
+}
+
+function dateTag(r) {
+  const R = D.roles; if (!R.date || !r[R.date]) return '';
+  const n = daysBetween(D.today, r[R.date]);
+  const cls = r._state === 'done' ? 'done' : r._state;
+  return fmtDate(r[R.date]) + (r._state === 'done' ? '' : ' <span class="tag ' + cls + '">' + TEXT.daysLeft(n) + '</span>');
+}
+
+function listTable(list) {
+  if (!list.length) return '<div class="empty">' + TEXT.noItems + '</div>';
+  const R = D.roles;
+  const extra = D.columns.filter((c) => ![R.title, R.date].includes(c.key) && c.type !== 'checkbox');
+  return '<table><tr><th>' + esc(D.columns.find((c) => c.key === R.title)?.label || '#') + '</th>' +
+    (R.date ? '<th>' + esc(D.columns.find((c) => c.key === R.date).label) + '</th>' : '') +
+    extra.map((c, i) => '<th class="' + (i > 1 ? 'hide-sm' : '') + '">' + esc(c.label) + '</th>').join('') + '</tr>' +
+    list.map((r) => '<tr><td><b>' + esc(titleOf(r)) + '</b></td>' + (R.date ? '<td>' + dateTag(r) + '</td>' : '') +
+      extra.map((c, i) => '<td class="' + (i > 1 ? 'hide-sm' : '') + '">' + (c.key === R.status && r[c.key] ? '<span class="tag' + (r._state === 'done' ? ' done' : '') + '">' + esc(r[c.key]) + '</span>' : linkify(r[c.key])) + '</td>').join('') +
+      '</tr>').join('') + '</table>';
+}
+
+function drawTodo(rows) {
+  const R = D.roles;
+  const open = rows.filter((r) => r._state !== 'done').sort((a, b) => (a[R.date] || '9999') < (b[R.date] || '9999') ? -1 : 1);
+  document.getElementById('todoTitle').textContent = TEXT.todo + ' (' + open.length + ')';
+  document.getElementById('todo').innerHTML = rows.length && !open.length ? '<div class="empty">' + TEXT.allDone + '</div>' : listTable(open);
+}
+
+function drawGroups(groups, rows) {
+  const box = document.getElementById('groupsBox'), g = D.roles.group;
+  if (!g || !groups.length) { box.innerHTML = ''; return; }
+  box.innerHTML = '<h2>' + TEXT.groups + '</h2>' + groups.map((name) => {
+    const list = rows.filter((r) => r[g] === name);
+    const n = (s) => list.filter((r) => r._state === s).length;
+    const sel = list.find((r) => 'c' + r._row === openCell);
+    return '<div class="group"><div class="gh"><b>' + esc(name) + '</b><span>' + list.length + ' · ' + TEXT.done + ' ' + n('done') +
+      (D.roles.date ? ' · ' + TEXT.late + ' ' + n('late') : '') + '</span></div><div class="cells">' +
+      list.map((r) => '<button class="cell ' + r._state + '" data-c="c' + r._row + '" title="' + esc(titleOf(r)) + '">' + esc(titleOf(r)) + '</button>').join('') +
+      '</div>' + (sel ? '<div class="detail">' + D.columns.map((c) => '<div><em>' + esc(c.label) + '</em>' +
+        (c.type === 'date' ? fmtDate(sel[c.key]) : c.type === 'checkbox' ? (sel[c.key] ? '✅' : '☐') : linkify(sel[c.key])) + '</div>').join('') + '</div>' : '') + '</div>';
+  }).join('');
+  box.querySelectorAll('.cell').forEach((b) => b.onclick = () => { openCell = openCell === b.dataset.c ? '' : b.dataset.c; draw(); });
+}
+
+load();
+</script>
+</body>
+</html>

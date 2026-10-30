@@ -1,0 +1,7 @@
+请帮我安装 https://github.com/jenhuey/sheet-dashboard-kit 的 sheet-dashboard skill。
+步骤：先确认电脑有 Node.js 20 以上（没有就教我安装），把这个 repo 下载到「文件」资料夹（有 git 就 git clone，没有就下载 ZIP 解压），然后在那个资料夹执行 node install.mjs，最后告诉我结果。
+
+---
+
+Please install the sheet-dashboard skill from https://github.com/jenhuey/sheet-dashboard-kit.
+Steps: check that Node.js 20+ is installed (if not, walk me through installing it), download the repo into my Documents folder (git clone, or the ZIP if git is missing), run `node install.mjs` in that folder, then tell me the result.
